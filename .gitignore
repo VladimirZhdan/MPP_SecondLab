@@ -1,0 +1,9 @@
+﻿################################################################################
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
+################################################################################
+
+/MPP_WeakDelegate/bin/Debug
+/MPP_WeakDelegate/obj/Debug
+/MPP_WeakDelegate.Tests/obj/Debug
+/MPP_WeakDelegate.sln
+/MPP_WeakDelegate.v12.suo
