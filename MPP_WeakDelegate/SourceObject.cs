@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MPP_WeakDelegate
 {
-    class SourceObject
+    public class SourceObject
     {
         public event Action<int> Completed;
         public event Action<int, double> Completed1;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MPP_WeakDelegate
 {
-    class ListenerObject
+    public class ListenerObject
     {
         public void Handler(int x)
         {

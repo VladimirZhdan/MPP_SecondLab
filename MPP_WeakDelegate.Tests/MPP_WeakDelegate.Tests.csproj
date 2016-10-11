@@ -53,6 +53,12 @@
     <Compile Include="MemoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MPP_WeakDelegate\MPP_WeakDelegate.csproj">
+      <Project>{f21d84e3-623b-4941-8a20-b49f2e7dbcd9}</Project>
+      <Name>MPP_WeakDelegate</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

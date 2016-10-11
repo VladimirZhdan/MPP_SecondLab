@@ -8,10 +8,11 @@ using System.Linq.Expressions;
 
 namespace MPP_WeakDelegate
 {
-    class WeakDelegate
+    public class WeakDelegate
     {
         private WeakReference weakRef;
-        private MethodInfo listenerMethodInfo;
+        private WeakReference listenerMethodInfoRef;
+        private MethodInfo listenerMethodInfo;        
         private Delegate weak;
         public Delegate Weak 
         { 
@@ -23,8 +24,9 @@ namespace MPP_WeakDelegate
 
         public WeakDelegate(Delegate listenerHandler)
         {
-            listenerMethodInfo = listenerHandler.Method;
-            weakRef = new WeakReference(listenerHandler.Target);
+            this.listenerMethodInfoRef = new WeakReference(listenerHandler.Method);
+            this.listenerMethodInfo = (MethodInfo)listenerMethodInfoRef.Target;
+            this.weakRef = new WeakReference(listenerHandler.Target);
             initProxyDelegate();
         }
 
