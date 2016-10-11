@@ -8,5 +8,6 @@ namespace MPP_WeakDelegate
 {
     class WeakDelegate
     {
+
     }
 }

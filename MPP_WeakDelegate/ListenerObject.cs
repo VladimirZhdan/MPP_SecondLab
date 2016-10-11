@@ -8,5 +8,24 @@ namespace MPP_WeakDelegate
 {
     class ListenerObject
     {
+        public void Handler(int x)
+        {
+
+        }
+
+        public void Handler(int x, double y)
+        {
+
+        }
+
+        public void Handler(int x, double y, int z)
+        {
+
+        }
+
+        public void Handler(int x0, int x1, int x2, int x3)
+        {
+
+        }
     }
 }
