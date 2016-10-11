@@ -9,7 +9,7 @@ namespace MPP_WeakDelegate.Tests
     public class MemoryTest
     {
         [TestMethod]
-        public void CheckMemory()
+        public void CheckDecreaseMemory()
         {
             SourceObject sourceObject = new SourceObject();
             ListenerObject[] listenerObject = new ListenerObject[10];
@@ -20,29 +20,39 @@ namespace MPP_WeakDelegate.Tests
                 sourceObject.Completed1 += (Action<int, double>)new WeakDelegate((Action<int, double>)listenerObject[i].Handler).Weak;
                 sourceObject.Completed2 += (Action<int, double, int>)new WeakDelegate((Action<int, double, int>)listenerObject[i].Handler).Weak;
                 sourceObject.Completed3 += (Action<int, int, int, int>)new WeakDelegate((Action<int, int, int, int>)listenerObject[i].Handler).Weak;
-            }
-            
-
+            }            
 
             long initialMemoryCount = GC.GetTotalMemory(true);
             for (int i = 0; i < 10; i++)
             {
                 listenerObject[i] = null;
             } 
-            GC.Collect(2, GCCollectionMode.Forced);      
-            Thread.Sleep(300);
-            GC.WaitForFullGCComplete(100);
-            GC.WaitForPendingFinalizers();
+            GC.Collect(2, GCCollectionMode.Forced);
 
             long currentMemoryCount = GC.GetTotalMemory(true);
 
-            bool expectedResult = true;
-
-            
+            bool expectedResult = true;            
 
             bool actualResult = (currentMemoryCount < initialMemoryCount);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
+
+        
+        [TestMethod]
+        public void CheckDeadOfWeakReference()
+        {
+            SourceObject sourceObject = new SourceObject();
+            ListenerObject listenerObject = new ListenerObject();
+            WeakDelegate weakDelegate = new WeakDelegate((Action<int>)listenerObject.Handler);
+            sourceObject.Completed += (Action<int>)weakDelegate.Weak;
+            listenerObject = null;            
+
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
+            sourceObject.CallAllEvents();
+            Assert.AreEqual(false, weakDelegate.WeakRef.IsAlive);
+        }
+        
+
     }
 }

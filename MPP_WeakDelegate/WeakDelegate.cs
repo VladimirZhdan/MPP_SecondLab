@@ -10,8 +10,7 @@ namespace MPP_WeakDelegate
 {
     public class WeakDelegate
     {
-        private WeakReference weakRef;
-        private WeakReference listenerMethodInfoRef;
+        private WeakReference weakRef;        
         private MethodInfo listenerMethodInfo;        
         private Delegate weak;
         public Delegate Weak 
@@ -22,17 +21,26 @@ namespace MPP_WeakDelegate
             }           
         }
 
-        public WeakDelegate(Delegate listenerHandler)
+        public WeakReference WeakRef
         {
-            this.listenerMethodInfoRef = new WeakReference(listenerHandler.Method);
-            this.listenerMethodInfo = (MethodInfo)listenerMethodInfoRef.Target;
+            get
+            {
+                return weakRef;
+            }
+        }
+
+        public WeakDelegate(Delegate listenerHandler)
+        {            
+            this.listenerMethodInfo = listenerHandler.Method;
             this.weakRef = new WeakReference(listenerHandler.Target);
             initProxyDelegate();
         }
 
         private void initProxyDelegate()
         {
-            ConstantExpression targetObject = Expression.Constant(weakRef.Target, weakRef.Target.GetType());            
+            Expression weakRefExpression = Expression.Constant(weakRef);
+            Type typeToCastProperty = weakRef.Target.GetType();
+            Expression targetObject = GetPropertyExpression(weakRefExpression, "Target", typeToCastProperty);            
             ConstantExpression nullObject = Expression.Constant(null);
             Expression isTargetObjectNotNull = Expression.NotEqual(targetObject, nullObject);
             ParameterExpression[] targetMethodArgsExpressions = getTargetMethodArgsExpressions();
@@ -51,6 +59,18 @@ namespace MPP_WeakDelegate
                 argsExpressions[i] = Expression.Parameter(methodParams[i].ParameterType, methodParams[i].Name);
             }
             return argsExpressions;
-        }      
+        }
+
+        private Expression GetPropertyExpression(Expression objectExpression, String propertyName, Type typeToCastProperty = null)
+        {
+            Type objectClassType = objectExpression.Type;
+            PropertyInfo targetPropertyInfo = objectClassType.GetProperty(propertyName);
+            Expression targetObjectExpression = Expression.Property(objectExpression, targetPropertyInfo);
+            if (typeToCastProperty != null)
+            {
+                targetObjectExpression = Expression.Convert(targetObjectExpression, typeToCastProperty);
+            }
+            return targetObjectExpression;
+        }
     }
 }

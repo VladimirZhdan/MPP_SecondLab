@@ -16,6 +16,10 @@ namespace MPP_WeakDelegate
             sourceObject.Completed1 += (Action<int, double>)new WeakDelegate((Action<int, double>)listenerObject.Handler).Weak;
             sourceObject.Completed2 += (Action<int, double, int>)new WeakDelegate((Action<int, double, int>)listenerObject.Handler).Weak;
             sourceObject.Completed3 += (Action<int, int, int, int>)new WeakDelegate((Action<int, int, int, int>)listenerObject.Handler).Weak;
+            listenerObject = null;
+            GC.Collect(2, GCCollectionMode.Forced);
+            GC.WaitForFullGCComplete(300);
+            GC.WaitForPendingFinalizers();
             sourceObject.CallAllEvents();
         }
     }
