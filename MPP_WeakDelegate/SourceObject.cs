@@ -8,6 +8,7 @@ namespace MPP_WeakDelegate
 {
     public class SourceObject
     {
+        public event Action Completed0;
         public event Action<int> Completed;
         public event Action<int, double> Completed1;
         public event Action<int, double, int> Completed2;
@@ -15,6 +16,10 @@ namespace MPP_WeakDelegate
 
         public void CallAllEvents()
         {
+            if(Completed0 != null)
+            {
+                Completed0();
+            }
             if(Completed != null)
             {
                 Completed(1);

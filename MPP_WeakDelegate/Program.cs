@@ -12,14 +12,19 @@ namespace MPP_WeakDelegate
         {
             SourceObject sourceObject = new SourceObject();
             ListenerObject listenerObject = new ListenerObject();
-            sourceObject.Completed += (Action<int>)new WeakDelegate((Action<int>)listenerObject.Handler).Weak;
-            sourceObject.Completed1 += (Action<int, double>)new WeakDelegate((Action<int, double>)listenerObject.Handler).Weak;
-            sourceObject.Completed2 += (Action<int, double, int>)new WeakDelegate((Action<int, double, int>)listenerObject.Handler).Weak;
-            sourceObject.Completed3 += (Action<int, int, int, int>)new WeakDelegate((Action<int, int, int, int>)listenerObject.Handler).Weak;
-            listenerObject = null;
-            GC.Collect(2, GCCollectionMode.Forced);
-            GC.WaitForFullGCComplete(300);
-            GC.WaitForPendingFinalizers();
+            sourceObject.Completed0 += (Action)new WeakDelegateModified((Action)listenerObject.Handler).Weak;
+            sourceObject.Completed += (Action<int>)new WeakDelegateModified((Action<int>)listenerObject.Handler).Weak;
+            sourceObject.Completed1 += (Action<int, double>)new WeakDelegateModified((Action<int, double>)listenerObject.Handler).Weak;
+            sourceObject.Completed2 += (Action<int, double, int>)new WeakDelegateModified((Action<int, double, int>)listenerObject.Handler).Weak;
+            sourceObject.Completed3 += (Action<int, int, int, int>)new WeakDelegateModified((Action<int, int, int, int>)listenerObject.Handler).Weak;
+            //sourceObject.Completed += (Action<int>)new WeakDelegateModified((Action<int>)listenerObject.Handler).Weak;
+            //sourceObject.Completed1 += (Action<int, double>)new WeakDelegate((Action<int, double>)listenerObject.Handler).Weak;
+            //sourceObject.Completed2 += (Action<int, double, int>)new WeakDelegate((Action<int, double, int>)listenerObject.Handler).Weak;
+            //sourceObject.Completed3 += (Action<int, int, int, int>)new WeakDelegate((Action<int, int, int, int>)listenerObject.Handler).Weak;
+            //listenerObject = null;
+            //GC.Collect(2, GCCollectionMode.Forced);
+            //GC.WaitForFullGCComplete(300);
+            //GC.WaitForPendingFinalizers();
             sourceObject.CallAllEvents();
         }
     }

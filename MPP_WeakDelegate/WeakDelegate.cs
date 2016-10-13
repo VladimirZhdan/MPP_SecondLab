@@ -8,6 +8,9 @@ using System.Linq.Expressions;
 
 namespace MPP_WeakDelegate
 {
+    /// <summary>
+    /// Class for geterate WeakDelegate using Expression Trees
+    /// </summary>
     public class WeakDelegate
     {
         private WeakReference weakRef;        
@@ -48,6 +51,18 @@ namespace MPP_WeakDelegate
             Expression checkTargetObjectNotNullAndCallTargetHandler = Expression.IfThen(isTargetObjectNotNull, callTargetHandler);
             LambdaExpression labmdaExpression = Expression.Lambda(checkTargetObjectNotNullAndCallTargetHandler, targetMethodArgsExpressions);
             weak = labmdaExpression.Compile();
+        }
+
+        private void initProxyDelegateModified()
+        {
+            if(weakRef.Target != null)
+            {
+                Delegate methodDelegate = listenerMethodInfo.CreateDelegate(listenerMethodInfo.MethodHandle.GetType(), weakRef.Target);
+            
+    
+
+
+            }
         }
 
         private ParameterExpression[] getTargetMethodArgsExpressions()
