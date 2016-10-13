@@ -12,7 +12,7 @@ namespace MPP_WeakDelegate
     /// <summary>
     /// Class for generate WeakDelegate using generation Dynamic method by ILGenerator
     /// </summary>
-    class WeakDelegateModified
+    public class WeakDelegateModified
     {        
         #region Fields
 
