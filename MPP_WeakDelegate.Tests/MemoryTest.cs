@@ -48,8 +48,7 @@ namespace MPP_WeakDelegate.Tests
             sourceObject.Completed += (Action<int>)weakDelegate.Weak;
             listenerObject = null;            
 
-            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
-            sourceObject.CallAllEvents();
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);            
             Assert.AreEqual(false, weakDelegate.WeakRef.IsAlive);
         }
         
