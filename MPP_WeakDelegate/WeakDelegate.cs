@@ -53,18 +53,6 @@ namespace MPP_WeakDelegate
             weak = labmdaExpression.Compile();
         }
 
-        private void initProxyDelegateModified()
-        {
-            if(weakRef.Target != null)
-            {
-                Delegate methodDelegate = listenerMethodInfo.CreateDelegate(listenerMethodInfo.MethodHandle.GetType(), weakRef.Target);
-            
-    
-
-
-            }
-        }
-
         private ParameterExpression[] getTargetMethodArgsExpressions()
         {
             ParameterInfo[] methodParams = listenerMethodInfo.GetParameters();

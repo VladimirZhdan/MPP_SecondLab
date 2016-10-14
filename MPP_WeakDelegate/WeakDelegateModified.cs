@@ -16,7 +16,7 @@ namespace MPP_WeakDelegate
     {        
         #region Fields
 
-        public Type delegateType;
+        private Type delegateType;
         public WeakReference targetRef;
         private MethodInfo listenerMethodInfo;
         private Delegate weak;
